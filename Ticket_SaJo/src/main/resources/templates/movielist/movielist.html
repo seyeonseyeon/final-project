@@ -1,0 +1,436 @@
+<head>
+<meta charset="utf-8">
+       <title>AMovie - Movie list</title>
+       <meta name="description" content="A Template by Gozha.net">
+       <meta name="keywords" content="HTML, CSS, JavaScript">
+       <meta name="author" content="Gozha.net">
+       
+    
+    <!-- Mobile Specific Metas-->
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="telephone=no" name="format-detection">
+    
+    <!-- Fonts -->
+        <!-- Font awesome - icon font -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Roboto -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!-- jQuery UI --> 
+        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+
+        <!-- Mobile menu -->
+        <link href="/css/gozha-nav.css" rel="stylesheet" />
+        <!-- Select -->
+        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" />
+        <!-- Swiper slider -->
+        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
+    
+        <!-- Custom -->
+        <link href="/css/style.css?v=1" rel="stylesheet" />
+
+        <!-- Modernizr --> 
+        <script src="/js/external/modernizr.custom.js"></script>
+        <!-- Ajax -->
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  	<script>
+  	function formatDate(date) {
+  	    
+  	    var d = new Date(date),
+  	    
+  	    month = '' + (d.getMonth() + 1) , 
+  	    day = '' + d.getDate(), 
+  	    year = d.getFullYear();
+  	    
+  	    if (month.length < 2) month = '0' + month; 
+  	    if (day.length < 2) day = '0' + day; 
+  	    
+  	    return [year, month, day].join('-');
+  	    
+  	    }
+
+  	function display2(data){
+  		$('#ui'+data[0].mid).empty();
+ 		for (var i = 0; i < data.length; i++) {
+ 	  		var regdate = formatDate(data[i].regdate);
+
+ 			$('#ui'+data[i].mid).append('<div class="comment__images" ><img class="comimg" src="/images/comment/comments.jpg"></div>');
+ 			
+			$('#ui'+data[i].mid).append('<a class="comment__author">'+data[i].name+'('+data[i].uid+')'+'</a> <p class="comment__date">'+regdate+' | '+data[i].dday+'일전'+'</p><p class="comment__message">'+data[i].text+'</p>');
+			$('#ui'+data[i].mid).append('<div class="star-ratings"> <div class="star-ratings-fill space-x-2 text-lg" style="width:'+data[i].star*20+'%"'+' value ="'+data[i].star+'"> <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span> </div> <div class="star-ratings-base space-x-2 text-lg"> <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span> </div></div>')
+			$('#ui'+data[i].mid).append('<hr>');
+		
+		}
+  	};
+  	function display(data){
+ 		var tid = data[0].tid
+ 		$('#tid'+data[0].mid).text(tid+'관');
+ 		for (var i = 0; i < data.length; i++) {
+			$('#schedules'+data[i].mid).append('<li class="time-select__item">'+data[i].starttime+'</li>');
+ 		
+		}
+  	};
+  	function changeschedule(mid,date){
+  		$('#schedules'+mid).empty();
+  		$('#tid'+mid).text('');
+  		$.ajax({
+			url:'/selectschedule',
+			data:{'mid':mid,'date':date},
+			success:function(data){
+				display(data);
+				
+			}
+		});
+  	};
+  	$(document).ready(function() {  		
+  		init_MovieList ();
+  		var today = new Date();
+
+  		var year = today.getFullYear();
+  		var month = ('0' + (today.getMonth() + 1)).slice(-2);
+  		var day = ('0' + today.getDate()).slice(-2);
+
+  		var dateString = year + '-' + month  + '-' + day;
+
+  		console.log(dateString);
+  		var mid;
+  		$('input[name=datepicker]').click(function(){
+  			mid = $(this).attr('placeholder');
+  		});
+		$('.movie__show-btn').one('click',function(){
+			mid = $(this).attr('id');
+			$('#datepicker'+mid).datepicker('setDate', 'today');
+			var date = $('#datepicker'+mid).val();			
+			$('input[name=date]').attr('value',date);
+			changeschedule(mid,date);
+		}); 
+		$('input[name=datepicker]').on("change",function(){
+				var date=$(this).val();
+				$('input[name=date]').attr('value',date);
+				changeschedule(mid,date);
+			});
+		$('button[name=button]').click(function(){
+					mid = $(this).attr('id');
+			        $('#'+mid+'1').modal();
+					$.ajax({
+						url:'/selectreivew',
+						data:{'mid':mid},
+						success:function(data){
+							display2(data);
+						}
+					});
+			    });
+    });
+    </script>
+    <style>
+    
+		.star-ratings {
+		  color: #aaa9a9; 
+		  position: relative;
+		  unicode-bidi: bidi-override;
+		  width: max-content;
+		  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+		  -webkit-text-stroke-color: #2b2a29;
+		}
+		 
+		.star-ratings-fill {
+		  color: #fff58c;
+		  padding: 0;
+		  position: absolute;
+		  z-index: 1;
+		  display: flex;
+		  top: 0;
+		  left: 0;
+		  overflow: hidden;
+		  -webkit-text-fill-color: #c0c0c0;
+		}
+		 
+		.star-ratings-base {
+		  z-index: 0;
+		  padding: 0;
+		}
+		.time-select__item{
+		 width: 50px;
+		}
+		.comimg{
+		height: 50px;
+		width: 50px;
+		}
+		h4{
+		margin: auto;
+		}
+    </style>
+</head>
+<body>
+        <!-- Main content -->
+        <section class="container">
+            <div class="col-sm-12">
+                <h2 class="page-heading">영화 목록</h2>
+
+                 <div class="tags-area">
+                    <div class="tags tags--unmarked">
+                        <span class="tags__label">정렬:</span>
+                            <ul>                          	
+                                <li class="item-wrap">
+                                	<a id="1" th:href="@{/movielist(sort=0)}" th:if="${sort}==0" class="tags__item item-active" data-filter='all'>all</a>
+                                	<a id="1" th:href="@{/movielist(sort=0)}" th:if="${sort}!=0" class="tags__item" data-filter='all'>all</a>
+                               	</li>
+                                <li class="item-wrap">
+                                	<a id="2" th:href="@{/movielist(sort=1)}" th:if="${sort}==1" class="tags__item item-active" data-filter='release'>개봉일 오래된 순</a>
+                                	<a id="2" th:href="@{/movielist(sort=1)}" th:if="${sort}!=1" class="tags__item" data-filter='release'>개봉일 오래된 순</a>
+                               	</li>
+                                <li class="item-wrap">
+                               		<a id="3" th:href="@{/movielist(sort=2)}" th:if="${sort}==2" class="tags__item item-active" data-filter='release'>별점 순</a>
+                               		<a id="3" th:href="@{/movielist(sort=2)}" th:if="${sort}!=2" class="tags__item" data-filter='release'>별점 순</a>
+                                </li>
+                                <li class="item-wrap">
+                                	<a id="4" th:href="@{/movielist(sort=3)}" th:if="${sort}==3" class="tags__item item-active" data-filter='comments'>리뷰 많은 순</a>
+                                	<a id="4" th:href="@{/movielist(sort=3)}" th:if="${sort}!=3" class="tags__item" data-filter='comments'>리뷰 많은 순</a>
+                                </li>
+                                <li class="item-wrap">
+                                	<a id="5" th:href="@{/movielist(sort=4)}" th:if="${sort}==4" class="tags__item item-active" data-filter='comments'>상영중인 영화</a>
+                                	<a id="5" th:href="@{/movielist(sort=4)}" th:if="${sort}!=4" class="tags__item" data-filter='comments'>상영중인 영화</a>
+                                </li>
+                                
+                            </ul>
+                            
+                    </div>
+                </div>
+                
+                <!-- Movie preview item -->
+                
+                <div th:each="m:${movie}"class="movie movie--preview movie--full release">
+                     <div class="col-sm-3 col-md-2 col-lg-2">
+                            <div class="movie__images">
+                                <img alt='' th:src="'/images/movie/'+${m.posterimg1}">
+                            </div>
+                            <div class="movie__feature">
+                                <button th:id="${m.id}" th:name="button" type="button" class="movie__feature-item movie__feature--comment" th:text="${m.rcnt}">123</button>
+                                <!-- Modal -->
+                                <div class="modal fade" th:id="${m.id}+'1'" role="dialog">
+								    <div class="modal-dialog">
+								    
+								      <!-- Modal content-->
+								      <div class="modal-content">
+								        <div class="modal-header">
+								          <button type="button" class="close" data-dismiss="modal">&times;</button>
+								          <h4 align="center" class="modal-title" th:text="${m.title}+'의 리뷰'"></h4>
+								        </div>
+								        <div class="modal-body">
+								        <h4 align="center">평균 별점</h4>
+								          	<div align="center" class="movie__rate">
+			                                	<div class="star-ratings">
+													<div class="star-ratings-fill space-x-2 text-lg"
+												    th:style="${'width:'+m.star*20+'%'}">
+														<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+													</div>
+													<div class="star-ratings-base space-x-2 text-lg">
+														<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+													</div>
+												</div>
+			                                <span class="movie__rate-number" th:text="${m.rcnt}+'votes'">170 votes</span> <span class="movie__rating" th:text="${m.star}">5.0</span>
+			                                </div>
+											<ui th:id="ui+${m.id}">
+					                            
+				                            </ui>
+							       		 </div>
+								        
+								        <div class="modal-footer">
+								          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								        </div>
+								      </div>
+								      
+								    </div>
+							    </div>
+                                <button type="button" class="movie__feature-item movie__feature--video" data-toggle="modal" th:data-target="'#'+${m.id}+'2'">&nbsp;</button>
+                                <!-- Modal -->
+								  <div class="modal fade" th:id="${m.id}+'2'" role="dialog">
+								    <div class="modal-dialog">
+								    
+								      <!-- Modal content-->
+								      <div class="modal-content">
+								        <div class="modal-header">
+								          <button type="button" class="close" data-dismiss="modal">&times;</button>
+								          <h4 class="modal-title" align="center" th:text="${m.title}+'의 동영상'"></h4>
+								        </div>
+								        <div class="modal-body">
+			                                <video controls width="570" >
+											    <source autoplay="autoplay" th:src="'/video/'+${m.id}+'.mp4'"
+											            >
+											</video>
+								        </div>
+								        <div class="modal-footer">
+								          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								        </div>
+								      </div>
+								      
+								    </div>
+								  </div>
+                                <button type="button" class="movie__feature-item movie__feature--photo" data-toggle="modal" th:data-target="'#'+${m.id}+'3'">&nbsp;</button>
+                                <!-- Modal -->
+								  <div class="modal fade" th:id="${m.id}+'3'" role="dialog">
+								    <div class="modal-dialog">
+								    
+								      <!-- Modal content-->
+								      <div class="modal-content">
+								        <div class="modal-header">
+								          <button type="button" class="close" data-dismiss="modal">&times;</button>
+								          <h4 class="modal-title" align="center" th:text="${m.title}+'의 사진'"></h4>
+								        </div>
+								        <div class="modal-body">
+			                                <div th:id="myCarousel+${m.id}" class="carousel slide" data-ride="carousel">
+											    <!-- Indicators -->
+											    <ol class="carousel-indicators">
+											      <li th:data-target="'#myCarousel'+${m.id}" data-slide-to="0" class="active"></li>
+											      <li th:data-target="'#myCarousel'+${m.id}" data-slide-to="1"></li>
+											      <li th:data-target="'#myCarousel'+${m.id}" data-slide-to="2"></li>
+											    </ol>
+											
+											    <!-- Wrapper for slides -->
+											    <div class="carousel-inner">
+											      <div class="item active">
+											        <img th:src="'/images/movie/'+${m.posterimg1}" alt="Los Angeles" style="width:100%;">
+											      </div>
+											
+											      <div class="item">
+											        <img th:src="'/images/movie/'+${m.posterimg2}" alt="Chicago" style="width:100%;">
+											      </div>
+											    </div>
+											
+											    <!-- Left and right controls -->
+											    <a class="left carousel-control" th:href="'#myCarousel'+${m.id}" data-slide="prev">
+											      <span class="glyphicon glyphicon-chevron-left"></span>
+											      <span class="sr-only">Previous</span>
+											    </a>
+											    <a class="right carousel-control" th:href="'#myCarousel'+${m.id}" data-slide="next">
+											      <span class="glyphicon glyphicon-chevron-right"></span>
+											      <span class="sr-only">Next</span>
+											    </a>
+											  </div>
+								        </div>
+								        <div class="modal-footer">
+								          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								        </div>
+								      </div>
+								      
+								    </div>
+								  </div>
+                                
+                            </div>
+                    </div>
+					
+                    <div class="col-sm-9 col-md-10 col-lg-10 movie__about">
+                            <a th:href="@{/movielist/detail(id=${m.id})}" class="movie__title link--huge" th:id="title" th:text="${m.title}">Last Vegas (2013)</a>
+
+                            <p class="movie__time" th:text="${m.runningtime}">105 min</p>
+
+                            <p class="movie__option"><strong>국가: </strong><a href="#" th:text="${m.country}">USA</a></p>
+                            <p class="movie__option"><strong>장르: </strong><a href="#" th:text="${m.gname}">Comady</a></p>
+                            <p class="movie__option"><strong>상영 날짜: </strong><a th:text="${#dates.format(m.releasedate,'yyyy-MM-dd')}">November 1, 2013</a></p>
+                            <p class="movie__option"><strong>감독: </strong><a href="#" th:text="${m.director}">Jon Turteltaub</a></p>
+                            <p class="movie__option"><strong>주연 배우: </strong><a href="#" th:text="${m.mainactor}">Robert De Niro</a></p>
+                            <p class="movie__option"><strong>러닝 타임: </strong><a href="#" th:text="${m.runningtime}">13</a></p>
+
+                            <div class="movie__btns">
+                                <a href="#" class="btn btn-md btn--warning">지금 이 영화 예매하기<span class="hidden-sm"></span></a>
+                            </div>
+
+                            <div class="preview-footer">
+                                <div class="movie__rate">
+                                	<div class="star-ratings">
+										<div class="star-ratings-fill space-x-2 text-lg"
+									    th:style="${'width:'+m.star*20+'%'}">
+											<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+										</div>
+										<div class="star-ratings-base space-x-2 text-lg">
+											<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+										</div>
+									</div>
+                                <span class="movie__rate-number" th:text="${m.rcnt}+' 리뷰'">170 votes</span> <span class="movie__rating" th:text="${m.star}">5.0</span>
+                                </div>
+                                <a class="movie__show-btn" th:id="${m.id}" th:name="showtime">상영 시간</a>
+                            </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    
+                    <!-- Time table (choose film start time)-->
+                    <div class="time-select">
+                        <div class="datepicker">
+		                      <span class="datepicker__marker">Date</span>
+		                      <input type="text" th:id="datepicker+${m.id}" th:name="datepicker" value='' class="datepicker__input" th:placeholder="${m.id}">
+		                      <input type="hidden" th:id="formid" th:name="formid" th:value="${m.id}">
+	                    </div>
+	                    
+	                    
+	                    
+	                    
+                        <div class="time-select__group group--first" >
+                            <div class="col-sm-4">
+                                <p class="time-select__place" th:id="tid+${m.id}"></p>
+                            </div>
+                            <ul class="col-sm-8 items-wrap" th:name="schedules" th:id="schedules+${m.id}">
+                            </ul>
+                        </div>                        
+                    </div>
+                    <!-- end time table-->
+
+                </div>
+                <!-- end movie preview item -->
+                <div class="coloum-wrapper">
+                    <div class="pagination paginatioon--full">
+                            <a href='#' class="pagination__prev" th:if="${mnum}-1>=0" th:href="@{/movielist(mnum=${mnum}-3,sort=${sort})}">이전</a>
+                            <a href='#' class="pagination__prev" th:if="${mnum}-1<=0">prev</a>
+                            <a href='#' class="pagination__next" th:href="@{/movielist(mnum=${mnum}+3,sort=${sort})}">다음</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        
+        <div class="clearfix"></div>
+		
+	  	</div>
+    <!-- open/close -->
+        <div class="overlay overlay-hugeinc">
+            
+            <section class="container">
+
+                <div class="col-sm-4 col-sm-offset-4">
+                    <button type="button" class="overlay-close">Close</button>
+                    <form id="login-form" class="login" method='get' novalidate=''>
+                        <p class="login__title">sign in <br><span class="login-edition">welcome to A.Movie</span></p>
+
+                        <div class="social social--colored">
+                                <a href='#' class="social__variant fa fa-facebook"></a>
+                                <a href='#' class="social__variant fa fa-twitter"></a>
+                                <a href='#' class="social__variant fa fa-tumblr"></a>
+                        </div>
+
+                        <p class="login__tracker">or</p>
+                        
+                        <div class="field-wrap">
+                        <input type='email' placeholder='Email' name='user-email' class="login__input">
+                        <input type='password' placeholder='Password' name='user-password' class="login__input">
+
+                        <input type='checkbox' id='#informed' class='login__check styled'>
+                        <label for='#informed' class='login__check-info'>remember me</label>
+                         </div>
+                        
+                        <div class="login__control">
+                            <button type='submit' class="btn btn-md btn--warning btn--wider">sign in</button>
+                            <a href="#" class="login__tracker form__tracker">Forgot password?</a>
+                        </div>
+                    </form>
+                </div>
+
+            </section>
+            </div>
+        <!-- jQuery UI -->
+        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+		
+</body>

@@ -1,0 +1,128 @@
+<meta charset="UTF-8">
+<style>
+   #signup_form{
+         font-family: 고딕;
+     	 font-size: twayair;
+      	 color: #8B4513;
+   }
+   
+   #id, #pwd, #pwdcheck, #name, #birth, #point {
+   		border-radius: 20px;
+   		border-color: #B8860B;
+   		
+   }
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+function sendId(id) {
+   $.ajax({
+      url:'/checkid',
+      data:{'id':id},
+      success:function(data){
+         if(data == '1') {
+            $('#ispan').text('이미 사용중이거나 탈퇴한 아이디입니다');
+            $('#ispan').css('color','red');
+         }else {
+            $('#ispan').text('사용가능한 아이디입니다');
+            $('#ispan').css('color','#3CB371');
+         }
+      }
+   });
+};
+
+
+$(document).ready(function(){
+   $('input[name="id"]').keyup(function(){
+      var id = $(this).val();
+      sendId(id);
+   });
+
+   $('input[name="pwdcheck"]').keyup(function(){
+	      var pwd = $('input[name="pwd"]').val();
+	      var pwd2 = $('input[name="pwdcheck"]').val();
+	      if(pwd == pwd2){
+	         $('#pspan2').text('일치합니다');
+	         $('#pspan2').css('color','#3CB371');
+	      }else {
+	         $('#pspan2').text('일치하지 않습니다. 비밀번호를 다시 확인해주세요');
+	         $('#pspan2').css('color', 'red');
+	      }
+	   });
+   
+   $('#signupbtn').click(function(){
+      $('#signup_form').attr({
+         'method' : 'post',
+          'action' : 'signupimpl'
+      });
+      $('#signup_form').submit();
+      alert('등록이 완료되었습니다');
+   });
+   
+   
+   
+   $('input[name="pwd"]').keyup(function(){
+      var pwd = $(this).val();
+      if(pwd.length < 5){
+         $('#pspan').text('보안에 취약합니다. 5자리 이상이어야 합니다');
+         $('#pspan').css('color', 'red');
+      }else {
+         $('#pspan').text('보안에 강합니다. 사용가능합니다.');
+         $('#pspan').css('color','#3CB371');
+      }
+   });
+   
+   $("select[name=sex]").change(function(){
+      console.log($(this).val());
+      console.log($("select[name=sex] option:selected").text());
+   });
+
+});
+
+</script>
+<br>
+<br>
+   <form id="signup_form" class="form-horizontal">
+      <div class="field-wrap">
+      <br>
+      <br>
+         아이디: 
+         <span id="ispan"></span><input id="id" type='text' name='id'>
+         </div>
+         <br>
+      <div class="field-wrap">
+         비밀번호: 
+         <span id="pspan"></span><input id="pwd" type='password' name='pwd'> 
+      </div>
+      <br>	
+      <div class="field-wrap">
+         비밀번호 재확인: 
+         <span id="pspan2"></span><input id="pwdcheck" type='password' name='pwdcheck'> 
+      </div>
+      <br>
+      <div class="field-wrap">
+         이름: <input id="name" type='text' name='name'> 
+      </div>
+      <br>
+      <div class="field-wrap">
+         생년월일: <input id="birth" value=19930321 type='date'name='birth'> 
+      </div>
+      <br>
+      <div class="field-wrap">
+         포인트: <input id="point" value=0 readonly="readonly">
+      </div>
+      <br>
+      <div class="field-wrap">
+         성별:
+          <select name="sex">
+          <option>-----선택-----</option>
+            <option value="woman">&nbsp &nbsp &nbsp 여성</option>
+            <option value="man">&nbsp &nbsp &nbsp 남성</option>        
+         </select> 
+      </div>
+      <br>
+      <br>
+     <div class="field-wrap">
+         <button id="signupbtn" class="btn btn-md btn--warning btn--wider">회원가입</button>
+      </div>
+   </form>

@@ -1,0 +1,287 @@
+<!doctype html>
+<html  lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<!-- Basic Page Needs -->
+        <meta charset="utf-8">
+        <title>AMovie - Booking step 2</title>
+        <meta name="description" content="A Template by Gozha.net">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="Gozha.net">
+    
+    <!-- Mobile Specific Metas-->
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="telephone=no" name="format-detection">
+    
+    <!-- Fonts -->
+        <!-- Font awesome - icon font -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Roboto -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    
+    <!-- Stylesheets -->
+
+        <!-- Mobile menu -->
+        <link href="css/gozha-nav.css" rel="stylesheet" />
+        <!-- Select -->
+        <link href="css/external/jquery.selectbox.css" rel="stylesheet" />
+    
+        <!-- Custom -->
+        <link href="css/style.css?v=1" rel="stylesheet" />
+
+        <!-- Modernizr --> 
+        <script src="js/external/modernizr.custom.js"></script>
+        <!-- Ajax -->
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    	<!-- Websocket -->
+    	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+		<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    		<!-- JavaScript-->	
+        <style>
+			#all{
+				width:400px;
+				height:200px;
+				overflow: auto;
+				border:2px solid red;
+			}
+			#me{
+				width:400px;
+				height:200px;
+				overflow: auto;
+				border:2px solid blue;
+			}
+			#to{
+				width:400px;
+				height:200px;
+				overflow: auto;
+				border:2px solid green;
+			}
+		</style>
+	
+		
+    	<script th:inline="javascript">
+    
+    	
+    	var stompClient = null;
+    
+    	// 서버소켓에 연결
+    	function connect() {
+    		var socket = new SockJS('/ws');
+    		stompClient = Stomp.over(socket);
+
+    		stompClient.connect({}, function(frame) { 
+    	
+    			console.log('Connected: ' + frame);
+    			stompClient.subscribe('/sends', function(msg) { 
+    				var tests = JSON.parse(msg.body).blist
+    				for(var i = 0; i<tests.length; i++){
+    	    			$("#"+tests[i].seatid).addClass("sits-state--not");
+    	    		}
+    			});
+
+    		});
+    	}
+
+    	// 서버소켓에 연결끊기
+    	function disconnect() {
+    		if (stompClient !== null) {
+    			stompClient.disconnect();
+    		}
+    		
+    		console.log("Disconnected");
+    	}
+		//버튼클릭
+		function clickbtn(){
+			//좌석 선택 알람
+			var cost = $('input[name=choosen_cost]').val();			
+			if (cost == 0) {
+				alert("좌석을 선택해주세요")
+				return
+			}	
+			disconnect();
+			$('.book2').submit();					
+		};
+			var test = [[${blist}]];
+	    	$(document).ready(function(){
+	    		connect();
+	    	
+	    	
+	    	
+	    		
+	    		
+	    		for(var i = 0; i<test.length; i++){
+	    			$("#"+test[i].seatid).addClass("sits-state--not");
+	    		}
+	    		
+	    		
+	    		var msg = [[${msg}]];
+	    		if(msg != null){
+	    			alert(msg);
+	    		}
+	    		
+	    	});  
+	    	
+    	</script>
+
+</head>
+ 
+<body th:if="${session.user != null}">
+
+	     
+        <!-- Main content -->
+        <div class="place-form-area">
+        <section class="container">
+            <div class="order-container">
+        
+            </div>
+                <div class="order-step-area">
+                    <div class="order-step first--step order-step--disable ">1. 영화 선택</div>
+                    <div class="order-step second--step">2. 좌석 선택</div>
+                </div>
+            
+            <div class="choose-sits">
+
+
+                <div class="choose-sits__info">
+                    <ul>
+                        <li class="sits-state sits-state--not">예매된 좌석</li>
+                        <li class="sits-state sits-state--your">선택 좌석</li>
+                    </ul>
+                </div>
+                
+                <div>
+                <div class="sits-area">
+                    <div class="sits-anchor">스크린</div>
+
+                    <div class="sits">
+                        <aside class="sits__line">
+                            <span class="sits__indecator" 
+                            th:each="r:${rows}"                          
+                            th:text="${r.r}"></span>
+
+                        </aside>
+
+                            <div class="sits__row" 
+                            th:each="r:${rows}" 
+                            th:id="${r.r}" 
+                            th:name="${r.r}">
+                                <span class="sits__place sits-price--cheap"
+                                 data-price='10000' th:each="c:${columns}" 
+                                 th:name="${r.r}+${c.c}" 
+                                 th:id="${r.r}+${c.c}" 
+                                 th:attr='data-place=${c.c} ? ${r.r}+${c.c}'
+                                 th:text='${r.r}+${c.c}'
+                                 >A2</span>
+                                
+                            </div>
+                            
+                           
+
+                        <aside class="sits__checked">
+                            <div class="checked-place">
+                                
+                            </div>
+                            <div class="checked-result">
+                                0원
+                            </div>
+                        </aside>
+                        <footer class="sits__number">
+                            <span class="sits__indecator" th:each="c:${columns}" th:text="${c.c}">1</span>
+                            
+                        </footer>
+                    </div>
+                </div>
+            </div>
+                
+            
+                
+            </div>
+                
+ 		</section>
+       </div>
+            <form class="book2" id="book2" method='post' action='book2impl'>
+	            <input type='hidden' name='sid' th:value="${book1info.sid}">
+				<input type='hidden' name='mcnt' th:value="${book1info.mcnt}">
+		        <input type='hidden' name='starttime' th:value="${book1info.starttime}">
+		        <input type='hidden' name='endtime' th:value="${book1info.endtime}">
+		        <input type='hidden' name='tid' th:value="${book1info.tid}">
+		        <input type='hidden' name='mid' th:value="${book1info.mid}">
+		        <input type='hidden' name='sdate' th:value="${book1info.sdate}">
+	            <input type='hidden' name='choosen_cost' class="choosen-cost" value="0">
+	            <input type='hidden' name='choosen_sits' class="choosen-sits">
+            </form>
+
+        <div class="clearfix"></div>
+
+            <div class="booking-pagination booking-pagination--margin">
+                    <a th:href="@{book1}" class="booking-pagination__prev" id="prevbtn">
+                        <span class="arrow__text arrow--prev">이전 페이지</span>
+                        <span class="arrow__info">영화 선택</span>
+                    </a>
+                     <a href="#" onclick="clickbtn();" class="booking-pagination__next" id="book2btn">
+                        <span class="arrow__text arrow--next">다음 페이지</span>
+                        <span class="arrow__info">결제</span>
+                    </a>
+            </div>
+      
+        
+
+    
+
+
+
+
+        <!-- jQuery 3.1.1--> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
+        <!-- Migrate --> 
+        <script src="js/external/jquery-migrate-1.2.1.min.js"></script>
+        <!-- Bootstrap 3--> 
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+        <!-- Mobile menu -->
+        <script src="js/jquery.mobile.menu.js"></script>
+         <!-- Select -->
+        <script src="js/external/jquery.selectbox-0.2.min.js"></script>
+
+        <!-- Form element -->
+        <script src="js/external/form-element.js"></script>
+        <!-- Form validation -->
+        <script src="js/form.js"></script>
+
+        <!-- Custom -->
+        <script src="js/custom.js"></script>
+		
+		<script type="text/javascript">
+            $(document).ready(function() {
+                init_BookingTwo();
+	    		
+	    		
+	    			
+	    		
+            });
+		</script>
+</body>
+
+<body th:unless="${session.user != null}">
+	<div class="wrapper">
+	       <div class="error-wrapper">
+	           <a th:href="@{/}" class="logo logo--dark">
+	               <img alt='logo' src="images/logo-dark.png">
+	               <p class="slogan--dark">fun to search, fun to watch</p>
+	           </a>
+	
+	           <div class="error">
+	               <img alt='' src='images/error.png' class="error__image">
+	               <h1 class="error__text">로그인이 만료되었습니다. 다시 로그인해주세요</h1>
+	               <a th:href="@{signin}" class="btn btn-md btn--warning">로그인</a>
+	           </div>
+	       </div>
+	
+	       <div class="copy-bottom">
+	           <p class="copy">&copy; A.Movie, 2013. All rights reserved. Done by Olia Gozha</p>
+	       </div>
+	
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,633 @@
+<meta charset="UTF-8">
+
+<style>
+.starsortimg {
+	width: 100%;
+	height: 50vh;
+}
+.movie-beta__item{
+	width: 100%;
+	height: 100%;
+}
+
+
+.star-ratings {
+	color: #aaa9a9;
+	position: relative;
+	unicode-bidi: bidi-override;
+	width: max-content;
+	-webkit-text-fill-color: transparent;
+	/* Will override color (regardless of order) */
+	
+}
+
+.star-ratings-fill {
+	color: gray;
+	padding: 0;
+	position: absolute;
+	z-index: 1;
+	display: flex;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+	-webkit-text-fill-color: gray;
+}
+
+.star-ratings-base {
+	z-index: 0;
+	padding: 0;
+}
+
+.movie__images img {
+	width: 277px;
+	height: 277px;
+}
+
+</style>
+
+<script>
+	function filter(e, c) {
+		var input = $('#search-input').val();
+		//alert(input)
+		e.href = "/search" + c + '?searchtxt=' + input;
+
+	}
+
+	function googlesearch() {
+		var googlesearchtxt = $('#googletxt').val();
+
+	}
+
+</script>
+
+
+<!-- Slider -->
+
+<div class="bannercontainer rev_slider_wrapper">
+
+	<!-- the ID here will be used in the JavaScript below to initialize the slider -->
+	<div id="rev_slider_1" class="banner rev_slider" style="display: none">
+
+		<!-- BEGIN SLIDES LIST -->
+		<ul style="display: block; overflow: hidden; width: 100%; height: 100%; max-height: 500px;">
+		 <!-- SLIDE 2 -->
+			<li data-transition="fade" class="slide"
+				data-title='영화 에티켓'>
+				<!-- SLIDE'S MAIN BACKGROUND IMAGE --> <img class="rev-slidebg"
+				alt='' src="/images/slides/theater4.jpg">
+				<div class="rs-background-video-layer" data-forcerewind="on" allow="autoplay"
+					data-volume="mute" data-videowidth="100%" data-videoheight="100%"
+					data-videomp4="video/movieTheater.mp4" data-videopreload="auto" 
+					data-videoloop="loop" data-forceCover="1" data-aspectratio="16:9"
+					data-autoplay="true" data-autoplayonlyfirsttime="false"></div>
+				<div class="tp-caption slide__name slide__name--smaller"
+					data-x="center" data-y="160" data-splitin="chars"
+					data-elementdelay="0.1" data-speed="700" data-start="1400"
+					data-easing="easeOutBack"
+					data-frames='[{
+                               "delay":1400,
+                               "speed":700,
+                               "split":"chars",
+                               "splitdelay":0.1,
+                               "frame":"0",
+                               "from":"opacity:0;",
+                               "to":"o:1;",
+                               "ease":"Power3.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+					</div>
+				<div class="tp-caption slide__time" data-x="center"
+					data-hoffset='-30' data-y="242"
+					data-frames='[{
+                               "delay":1800,
+                               "speed":300,
+                               "frame":"0",
+                               "from":"x:[50%];opacity:0;",
+                               "to":"o:1;",
+                               "ease":"Power3.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+					</div>
+				<div
+					class="tp-caption slide__date position-center postion-place--two lfb ltb"
+					data-x="center" data-hoffset='50' data-y="242"
+					data-frames='[{
+                               "delay":2200,
+                               "speed":500,
+                               "frame":"0",
+                               "from":"y:100px;opacity:0;",
+                               "to":"o:1;",
+                               "ease":"Power3.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+					</div>	
+			</li>
+			<!-- SLIDE 1 -->
+			<li data-transition="fade" class="slide"
+				data-title='Gone With The Wind'>
+				<!-- SLIDE'S MAIN BACKGROUND IMAGE --> <img class="rev-slidebg"
+				alt='' src="/images/slides/wind.jpg">
+
+				<div class="tp-caption slide__name margin-slider" data-x="right"
+					data-y="80"
+					data-frames='[{
+                               "delay":300,
+                               "split":"chars",
+                               "splitdelay":0.1,
+                               "speed":700,
+                               "frame":"0",
+                               "from":"x:[-100%];opacity:0;",
+                               "mask":"x:0px;y:0px;s:inherit;e:inherit;",
+                               "to":"o:1;",
+                               "ease":"Power4.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+					Gone <span class="highlight">With</span> The <span
+						class="highlight">Wind.</span>
+				</div>
+
+				<div class="tp-caption n slide__time margin-slider" data-x="right"
+					data-hoffset='100' data-y="186"
+					data-frames='[{
+                               "delay":1200,
+                               "speed":300,
+                               "frame":"0",
+                               "from":"x:[50%];opacity:0;",
+                               "to":"o:1;",
+                               "ease":"Power3.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+					개봉연도 : </div>
+
+				<div class="tp-caption  slide__date margin-slider" data-x="right"
+					data-hoffset='40' data-y="186"
+					data-frames='[{
+                               "delay":1700,
+                               "speed":500,
+                               "frame":"0",
+                               "from":"y:100px;opacity:0;",
+                               "to":"o:1;",
+                               "ease":"Power3.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+					1939</div> <!-- SLIDE 2 -->
+			<li data-transition="fade" class="slide"
+				data-title='The Wizard Of Oz.'>
+				<!-- SLIDE'S MAIN BACKGROUND IMAGE --> <img class="rev-slidebg"
+				alt='' src="/images/slides/oz.jpg">
+				<div class="rs-background-video-layer" data-forcerewind="on" allow="autoplay"
+					data-volume="mute" data-videowidth="100%" data-videoheight="100%"
+					data-videomp4="video/The Wizard of Oz.mp4" data-videopreload="auto" data-videostartat="00:06"
+					data-videoloop="loop" data-forceCover="1" data-aspectratio="16:9"
+					data-autoplay="true" data-autoplayonlyfirsttime="false"></div>
+				<div class="tp-caption slide__name slide__name--smaller"
+					data-x="center" data-y="160" data-splitin="chars"
+					data-elementdelay="0.1" data-speed="700" data-start="1400"
+					data-easing="easeOutBack"
+					data-frames='[{
+                               "delay":1400,
+                               "speed":700,
+                               "split":"chars",
+                               "splitdelay":0.1,
+                               "frame":"0",
+                               "from":"opacity:0;",
+                               "to":"o:1;",
+                               "ease":"Power3.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+					The Wizard of Oz.</div>
+				<div class="tp-caption slide__time" data-x="center"
+					data-hoffset='-30' data-y="242"
+					data-frames='[{
+                               "delay":1800,
+                               "speed":300,
+                               "frame":"0",
+                               "from":"x:[50%];opacity:0;",
+                               "to":"o:1;",
+                               "ease":"Power3.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+					개봉연도 : </div>
+				<div
+					class="tp-caption slide__date position-center postion-place--two lfb ltb"
+					data-x="center" data-hoffset='50' data-y="242"
+					data-frames='[{
+                               "delay":2200,
+                               "speed":500,
+                               "frame":"0",
+                               "from":"y:100px;opacity:0;",
+                               "to":"o:1;",
+                               "ease":"Power3.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+					1939</div>
+
+				<div class="tp-caption slider-wrap-btn" data-x="center" data-y="310"
+					data-frames='[{
+                               "delay":2800,
+                               "speed":400,
+                               "frame":"0",
+                               "from":"y:100px;opacity:0;",
+                               "to":"o:1;",
+                               "ease":"Power3.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+					<a href="#" class="btn btn-md btn--danger btn--wide slider--btn">영화정보 GO!</a>
+				</div>
+			</li>
+
+			<!-- SLIDE 3 -->
+			<li data-transition="fade" class="slide" data-title='사이코'>
+				<!-- SLIDE'S MAIN BACKGROUND IMAGE --> <img class="rev-slidebg"
+				alt='' src="/images/slides/psy.png">
+				<div
+					class="tp-caption slide__name slide__name--smaller slide__name--specific"
+					data-x="center" data-y="160"
+					data-frames='[{
+                               "delay":1400,
+                               "speed":700,
+                               "frame":"0",
+                               "from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;",
+                               "mask":"x:0px;y:[100%];s:inherit;e:inherit;",
+                               "to":"o:1;",
+                               "ease":"Power3.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+					사이코</div>
+
+				<div class="tp-caption slide__descript" data-x="center" data-y="240"
+					data-frames='[{
+                               "delay":2000,
+                               "speed":500,
+                               "frame":"0",
+                               "from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;",
+                               "mask":"x:0px;y:[100%];s:inherit;e:inherit;",
+                               "to":"o:1;",
+                               "ease":"Power3.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+					개봉연도 : 1960</div>
+
+				<div class="tp-caption slider-wrap-btn" data-x="center" data-y="310"
+					data-frames='[{
+                               "delay":2500,
+                               "speed":500,
+                               "frame":"0",
+                               "from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;",
+                               "mask":"x:0px;y:[100%];s:inherit;e:inherit;",
+                               "to":"o:1;",
+                               "ease":"Power3.easeInOut"
+                               },{
+                               "delay":"wait",
+                               "speed":300,
+                               "frame":"999",
+                               "to":"opacity:0;",
+                               "ease":"Power3.easeInOut"
+                             }]'>
+					<a href="#" class="btn btn-md btn--danger slider--btn">영화정보 GO!</a>
+				</div>
+			</li>
+
+
+		</ul>
+		<!-- END SLIDES LIST -->
+
+	</div>
+	<!-- END SLIDER CONTAINER -->
+
+</div>
+<div class="movie-best">
+
+		<div style="margin-top:100px;"class="col-sm-10 col-sm-offset-1 movie-best__rating">평점이 높은 영화</div>
+		<div class="col-sm-12 change--col" id="dropdown_movie_info">
+			<div class="movie-beta__item" th:each="movie,index : ${starSortList}"
+				th:if="${index.index}<3" id="starsortimgdiv">
+				<a th:href="@{/movielist/detail(id=${movie.id})}"> <img
+					class="starsortimg" alt=''
+					th:src="'/images/movie/' + ${movie.posterimg1}"></a> <span
+					class="best-rate" th:text="${movie.star}">5.0</span>
+
+				<ul class="movie-beta__info">
+					<li><span class="best-voted" th:text="${movie.title}">
+					</span></li>
+					<li>
+						<p class="movie__time" th:text="${movie.runningtime}">min</p>
+						<p th:text="${movie.gname}"></p>
+						<p th:text="'실관람평 : ' + ${movie.rcnt} + ' 명의 리뷰가 있습니다!'"></p>
+					</li>
+					<li class="last-block"><a th:href="@{/movielist/detail(id=${movie.id})}"
+						class="slide__link">more</a></li>
+				</ul>
+			</div>
+			<div class="movie-beta__item hidden-xs hidden-sm"
+				th:each="movie,index : ${starSortList}" th:unless="${index.index}<3">
+				<a th:href="@{/movielist/detail(id=${movie.id})}"><img
+					class="starsortimg" alt=''
+					th:src="'/images/movie/' + ${movie.posterimg1}"> </a><span
+					class="best-rate" th:text="${movie.star}">5.0</span>
+
+				<ul class="movie-beta__info">
+					<li><span class="best-voted" th:text="${movie.title}">
+					</span></li>
+					<li>
+						<p class="movie__time" th:text="${movie.runningtime}">min</p>
+						<p th:text="${movie.gname}"></p>
+						<p th:text="'실관람평 : ' + ${movie.rcnt} + ' 명의 리뷰가 있습니다!'"></p>
+					</li>
+					<li class="last-block"><a th:href=@{/movielist/detail(id=${movie.id})}
+						class="slide__link">more</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-sm-10 col-sm-offset-1 movie-best__check" id="starsortdiv"> 오늘 상영작 확인하러 가기 </div>
+	</div>
+<!-- END SLIDER CONTAINER WRAPPER -->
+<!--end slider -->
+
+
+<!-- Main content -->
+<section class="container">
+
+	<div class="col-sm-12">
+		<div class="mega-select-present mega-select-top mega-select--full">
+			<div class="mega-select-marker text-center">
+				<div class="marker-indecator film-category">
+					<p class="select-marker">
+						<span> 영화 장르를 찾아보세요 </span> <br> 장르
+					</p>
+				</div>
+
+				<div class="marker-indecator actors">
+					<p class="select-marker">
+						<span> 좋아하는 배우는 누구입니까 </span> <br> 영화배우
+					</p>
+				</div>
+
+				<div class="marker-indecator director">
+					<p class="select-marker">
+						<span> 어떤 감독의 상영작이 궁금하신가요 </span> <br> 감독 
+					</p>
+				</div>
+
+				<div class="marker-indecator country">
+					<p class="select-marker">
+						<span>어느 국가의 영화를 보고싶으신가요 </span> <br> 나라
+					</p>
+				</div>
+			</div>
+
+			<div class="mega-select pull-right">
+				<span class="mega-select__point"> 검색하기 </span>
+				<!-- search 메뉴  -->
+				<ul class="mega-select__sort">
+					<li class="filter-wrap"><a href="#"
+						class="mega-select__filter filter--active"
+						data-filter='film-category'>장르</a></li>
+					<li class="filter-wrap"><a href="#"
+						class="mega-select__filter" data-filter='actors'>배우</a></li>
+					<li class="filter-wrap"><a href="#"
+						class="mega-select__filter" data-filter='director'>감독</a></li>
+					<li class="filter-wrap"><a href="#"
+						class="mega-select__filter" data-filter='country'>국가</a></li>
+				</ul>
+
+				<input name="search-input" type='text' class="select__field"
+					id="search-input">
+
+				<div class="select__btn">
+					<a href="#" class="btn btn-md btn--shine film-category"
+						onclick="filter(this,'category')">장르 search </a> <a href="#"
+						class="btn btn-md btn--shine actors"
+						onclick="filter(this,'actors')">배우 search </a> <a href="#"
+						class="btn btn-md btn--shine director"
+						onclick="filter(this,'director')">감독 search </a> <a href="#"
+						class="btn btn-md btn--shine country"
+						onclick="filter(this,'country')">나라 search </a>
+
+				</div>
+
+				<div class="select__dropdowns">
+					<ul class="select__group film-category">
+						<li class="select__variant" data-value="로맨스">로맨스</li>
+						<li class="select__variant" data-value='코미디'>코미디</li>
+						<li class="select__variant" data-value='전쟁'>전쟁</li>
+						<li class="select__variant" data-value='판타지'>판타지</li>
+						<li class="select__variant" data-value='모험'>모험</li>
+						<li class="select__variant" data-value='공포'>공포</li>
+						<li class="select__variant" data-value='스릴러'>스릴러</li>
+						<li class="select__variant" data-value='SF'>SF</li>
+					</ul>
+
+					<ul class="select__group actors">
+						<li class="select__variant" data-value='Anthony Perkins'>Anthony
+							Perkins</li>
+						<li class="select__variant" data-value='bibian lee'>bibian
+							lee</li>
+						<li class="select__variant" data-value='frank mogan'>frank
+							mogan</li>
+						<li class="select__variant" data-value='Gary Lockwood'>Gary
+							Lockwood</li>
+						<li class="select__variant" data-value='Janet Leigh'>Janet
+							Leigh</li>
+						<li class="select__variant" data-value='김진규'>김진규</li>
+						<li class="select__variant" data-value='이은심'>이은심</li>
+					</ul>
+
+					<ul class="select__group director">
+						<li class="select__variant" data-value='Alfred Joseph Hitchcock'>Alfred
+							Joseph Hitchcock</li>
+						<li class="select__variant" data-value='victor fleming'>victor
+							fleming</li>
+						<li class="select__variant" data-value='Stanley Kubrick'>Stanley
+							Kubrick</li>
+						<li class="select__variant" data-value='김기영 '>김기영</li>
+					</ul>
+
+					<ul class="select__group country">
+						<li class="select__variant" data-value='미국'>미국</li>
+						<li class="select__variant" data-value='일본'>일본</li>
+						<li class="select__variant" data-value='한국'>한국</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	<h2 id='target' class="page-heading heading--outcontainer"> 오늘의 상영작 </h2>
+
+	<div class="col-sm-12">
+		<div class="row">
+			<div class="col-sm-12 col-md-12">
+				<!-- Movie variant with time -->
+				<div th:each="movie,index : ${todayMovieList}"
+					th:if="${not #lists.isEmpty(todayMovieList)}">
+					<div class="movie movie--test movie--test--dark movie--test--left"
+						th:if="${(index.index+1) % 2 == 0}">
+						<div class="movie__images">
+							<a th:href="@{/movielist/detail(id=${movie.id})}"
+								class="movie-beta__link"> <img alt='470-235'
+								th:src="'/images/movie/' + ${movie.posterimg1}">
+							</a>
+						</div>
+
+						<div class="movie__info">
+							<a th:href="@{/movielist/detail(id=${movie.id})}"
+								class="movie__title link--huge" th:text="${movie.title}">Last
+								Vegas (2013)</a>
+
+							<p class="movie__time" th:text="${movie.runningtime}">91 min</p>
+
+							<p class="movie__option">
+								<a href="#" th:text="${movie.gname}"></a>
+							</p>
+
+							<div class="movie__rate">
+								<div class="star-ratings">
+									<div name="${movie.star}"
+										class="star-ratings-fill space-x-2 text-lg"
+										th:style="${'width:'+movie.star*20+'%'}">
+										<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+									</div>
+									<div class="star-ratings-base space-x-2 text-lg">
+										<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+									</div>
+								</div>
+								<!-- <div class="score" th:value="${movie.star}"></div> -->
+								<span class="movie__rating" th:text="${movie.star}">4.1</span>
+							</div>
+						</div>
+					</div>
+					<div class="movie movie--test movie--test--dark movie--test--right"
+						th:unless="${(index.index+1) % 2 == 0}">
+						<div class="movie__images">
+							<a th:href="@{/movielist/detail(id=${movie.id})}"
+								class="movie-beta__link"> <img alt='470-235'
+								th:src="'/images/movie/' + ${movie.posterimg1}">
+							</a>
+						</div>
+
+						<div class="movie__info">
+							<a th:href="@{/movielist/detail(id=${movie.id})}"
+								class="movie__title link--huge" th:text="${movie.title}">Last
+								Vegas (2013)</a>
+
+							<p class="movie__time" th:text="${movie.runningtime}">91 min</p>
+
+							<p class="movie__option">
+								<a href="#" th:text="${movie.gname}"></a>
+							</p>
+
+							<div class="movie__rate">
+								<div class="star-ratings">
+									<div name="${movie.star}"
+										class="star-ratings-fill space-x-2 text-lg"
+										th:style="${'width:'+movie.star*20+'%'}">
+										<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+									</div>
+									<div class="star-ratings-base space-x-2 text-lg">
+										<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+									</div>
+								</div>
+								<!-- <div class="score" th:value="${movie.star}"></div> -->
+								<span class="movie__rating" th:text="${movie.star}">4.1</span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div th:unless="${not #lists.isEmpty(todayMovieList)}">
+					<h5>
+						<span style="color:orange"><i class="fa fa-times-circle"> 아쉽지만 오늘은 상영 예정인 영화가 없습니다...</i> </span> 
+					</h5>
+				</div>
+
+			</div>
+
+
+		</div>
+	</div>
+	<!--https://www.google.com/search?q=  -->
+	<div class="col-sm-12">
+		<div class="mega-select pull-left">
+			<form action="https://www.google.com/search" method="GET"
+				target="_blank">
+				<fieldset>
+					<legend>
+						<h2 class="page-heading">영화에 대해 궁금하신게 있으신가요?</h2>
+					</legend>
+
+					<input name="q" type="hidden" id="googletxt" value="movie">
+					<input name="q" type="text" class="select__field">
+					<div class="select__btn">
+						<button class="btn btn-md btn--shine">search</button>
+					</div>
+
+				</fieldset>
+			</form>
+		</div>
+	</div>
+
+</section>

@@ -1,0 +1,563 @@
+<!doctype html>
+<html> 
+<head>
+	<!-- Basic Page Needs -->
+        <meta charset="utf-8">
+        <title>AMovie - Movie page</title>
+        <meta name="description" content="A Template by Gozha.net">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="Gozha.net">
+    
+    <!-- Mobile Specific Metas-->
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="telephone=no" name="format-detection">
+    
+    <!-- Fonts -->
+        <!-- Font awesome - icon font -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Roboto -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    
+    <!-- Stylesheets -->
+        <!-- jQuery UI --> 
+        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+
+        <!-- Mobile menu -->
+        <link href="/css/gozha-nav.css" rel="stylesheet" />
+        <!-- Select -->
+        <link href="/css/external/jquery.selectbox.css" rel="stylesheet" /> 
+        <!-- Swiper slider -->
+        <link href="/css/external/idangerous.swiper.css" rel="stylesheet" />
+        <!-- Magnific-popup -->
+        <link href="/css/external/magnific-popup.css" rel="stylesheet" />
+    
+        <!-- Custom -->
+        <link href="/css/style.css?v=1" rel="stylesheet" />
+
+        <!-- Modernizr --> 
+        <script src="/js/external/modernizr.custom.js"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+		<script src="https://code.highcharts.com/modules/exporting.js"></script>
+		<script src="https://code.highcharts.com/modules/export-data.js"></script>
+		<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+		
+		<link rel="stylesheet" type="text/css"
+    	href="https://github.s3.amazonaws.com/downloads/lafeber/world-flags-sprite/flags32.css" />
+</head>
+<style>
+		h4 {
+		margin: 20px 0px 20px;
+		}
+		p{
+		margin: 0px;
+		margin-left: 40px;
+		}
+		#detailcomment{
+		margin-left: 40px;
+		}
+		.share__marker{
+		margin-left: 40px;
+		}
+		#chartcontainer {
+			float : left;
+		    height: 400px;
+		    width : 400px;
+		    margin-top: 40px;
+		    background: #F6F6F6;
+		}
+		#circlecontainer {
+			float : right;
+		    height: 400px;
+		    width : 400px;
+		    margin-top: 40px;
+		    background: #F6F6F6;
+		}
+		
+		.highcharts-figure,
+		.highcharts-data-table table {
+		    min-width: 320px;
+		    max-width: 800px;
+		    margin: 1em auto;
+		}
+		
+		.highcharts-data-table table {
+		    font-family: Verdana, sans-serif;
+		    border-collapse: collapse;
+		    border: 1px solid #ebebeb;
+		    margin: 10px auto;
+		    text-align: center;
+		    width: 100%;
+		    max-width: 500px;
+		    background-color: #F6F6F6;
+		}
+		
+		.highcharts-data-table caption {
+		    padding: 1em 0;
+		    font-size: 1.2em;
+		    color: #555;
+		}
+		
+		.highcharts-data-table th {
+		    font-weight: 600;
+		    padding: 0.5em;
+		}
+		
+		.highcharts-data-table td,
+		.highcharts-data-table th,
+		.highcharts-data-table caption {
+		    padding: 0.5em;
+		}
+		
+		.highcharts-data-table thead tr,
+		.highcharts-data-table tr:nth-child(even) {
+		    background: #F6F6F6;
+		}
+		
+		.highcharts-data-table tr:hover {
+		    background: #F6F6F6;
+		}
+		
+		.star-ratings {
+		  color: #aaa9a9; 
+		  position: relative;
+		  unicode-bidi: bidi-override;
+		  width: max-content;
+		  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+		  -webkit-text-stroke-color: #2b2a29;
+		}
+		 
+		.star-ratings-fill {
+		  color: #fff58c;
+		  padding: 0;
+		  position: absolute;
+		  z-index: 1;
+		  display: flex;
+		  top: 0;
+		  left: 0;
+		  overflow: hidden;
+		  -webkit-text-fill-color: #c0c0c0;
+		}
+		 
+		.star-ratings-base {
+		  z-index: 0;
+		  padding: 0;
+		}
+		.mvitem {
+		height: 130px;
+		width: 215px;
+		}
+		.comimg{
+		height: 50px;
+		width: 50px;
+		}
+		
+</style>
+<body>
+        <!-- Main content -->
+        <section class="container">
+            <div class="col-lg-12">
+                <div class="movie">
+                    <h2 class="page-heading" id="title" th:text="${movie.title}">The Hobbit: An Unexpected Journey</h2>
+                    
+                    <div class="movie__info">
+                        <div class="col-sm-4 col-md-3 movie-mobile">
+                            <div class="movie__images">
+                                <span class="movie__rating" th:text="${movie.star}">5.0</span>
+                                <img class="detailimg" alt='' th:src="'/images/movie/'+${movie.posterimg2}">
+                            </div>
+                            <div class="movie__rate">평균 별점:
+                            	<div class="star-ratings">
+										<div class="star-ratings-fill space-x-2 text-lg"
+									    th:style="${'width:'+movie.star*20+'%'}" th:value ="${movie.star}">
+											<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+										</div>
+										<div class="star-ratings-base space-x-2 text-lg">
+											<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+										</div>
+									</div> </div>
+                        </div>
+                        <div class="col-sm-8 col-md-9">
+                            <p class="movie__time" th:text="${movie.runningtime}">169 min</p>
+
+                            <p class="movie__option"><strong>국가: </strong><a href="#" th:text="${movie.country}">New Zeland</a>
+                            <p class="movie__option"><strong>개봉연도: </strong><a href="#" th:text="${#dates.format(movie.releasedate,'yyyy')}">2012</a></p>
+                            <p class="movie__option"><strong>장르: </strong><a href="#" th:text="${movie.gname}">Adventure</a></p>
+                            <p class="movie__option"><strong>상영 날짜: </strong><span th:text="${#dates.format(movie.releasedate,'MMM dd,yyyy')}">December 12, 2012</span></p>
+                            <p class="movie__option"><strong>감독: </strong><a href="#" th:text="${movie.director}">Peter Jackson</a></p>
+                            <p class="movie__option"><strong>주연 배우: </strong><a href="#" th:text="${movie.mainactor}">...</a></p>
+
+                            <a href="#" id="detailcomment" class="comment-link">최근 리뷰:  <a href="#" class="comment-link" th:text="${movie.rcnt}">15</a></a>
+
+                            <div class="movie__btns movie__btns--full">
+                                <a href="#" class="btn btn-md btn--warning">지금 이 영화 예매하기</a>
+                            </div>
+
+                            <div class="share">
+                                <span class="share__marker">공유: </span>
+                                <div class="addthis_toolbox addthis_default_style ">
+                                    <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+                                    <a class="addthis_button_tweet"></a>
+                                    <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="clearfix"></div>
+                    
+                    <h2 class="page-heading">The plot</h2>
+
+                    <p class="movie__describe" th:text="${movie.text}"></p>
+
+                    <h2 class="page-heading">photos &amp; videos</h2>
+                    
+                    <div class="movie__media">
+                        <div class="swiper-container">
+                          <div class="swiper-wrapper">
+                              <!--First Slide-->
+                              <div class="swiper-slide media">
+                                <a th:href="'https://www.youtube.com/results?search_query='+${movie.title}" class="movie__media-item " target='_blank'>
+                                     <img alt='' class="mvitem" th:src="'/images/movie/'+${movie.id}+'1.jpg'">
+                                </a>
+                              </div>
+                              
+                              <!--Second Slide-->
+                              <div class="swiper-slide media-video">
+                                <a th:href="'/video/'+${movie.id}+'.mp4'" class="movie__media-item">
+                                    <img alt='' class="mvitem" th:src="'/images/movie/'+${movie.id}+'2.jpg'">
+                                </a>
+                              </div>
+                              
+                              <!--Third Slide-->
+                              <div class="swiper-slide media-photo"> 
+                                    <a th:href="'/images/movie/'+${movie.posterimg1}" class="movie__media-item">
+                                        <img alt='' class="mvitem" th:src="'/images/movie/'+${movie.posterimg1}">
+                                     </a>
+                              </div>
+
+                              <!--Four Slide-->
+                              <div class="swiper-slide media-photo"> 
+                                    <a th:href="'/images/movie/'+${movie.posterimg2}" class="movie__media-item">
+                                        <img alt='' class="mvitem" th:src="'/images/movie/'+${movie.posterimg2}">
+                                     </a>
+                              </div>
+
+                              <!--Slide-->
+                              <div class="swiper-slide media-photo"> 
+                                    <a th:href="'/images/movie/'+${movie.id}+'2.jpg'" class="movie__media-item">
+                                        <img alt='' class="mvitem" th:src="'/images/movie/'+${movie.id}+'3.jpg'">
+                                     </a>
+                              </div>
+
+                              <!--Slide-->
+                              <div class="swiper-slide media-photo"> 
+                                    <a th:href="'/images/movie/'+${movie.id}+'4.jpg'" class="movie__media-item">
+                                        <img alt=' ' th:src="'/images/movie/'+${movie.id}+'4.jpg'">
+                                     </a>
+                              </div>
+                          </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <input id="id" type="hidden" th:value="${movie.id}">
+                <figure class="highcharts-figure">
+                	<div id="circlecontainer"></div>
+				    <div id="chartcontainer"></div>
+				    <button id="plain">Plain</button>
+				    <button id="inverted">Inverted</button>
+				</figure>
+                <div class="choose-container">
+                    <a href="#" id="map-switch" class="watchlist watchlist--map watchlist--map-full"><span class="show-map">위치 지도로 찾기</span><span  class="show-time">지도 닫기</span></a>
+                    
+                    <div class="clearfix"></div>
+                    
+                    <!-- hiden maps with multiple locator-->
+                    <div  class="map" style="display:none">
+                        <div id="map" style="width:100%; height: 70vh;"></div> 
+                    </div>
+
+                   <h2 class="page-heading" th:text="'최근 리뷰('+${movie.rcnt}+')'">.</h2>
+
+                    <div class="comment-wrapper">
+                        <form id="comment-form" class="comment-form" method='post' th:if="${session.user!=null}">
+                        	<input name=mid th:value="${movie.id}" type="hidden">
+                        	<input name=uid th:value=${session.user.id} type="hidden">
+                        	    <div class="movie__rate"><div class="score"><input name="star" type="hidden"></div> <span class="movie__rating"></span></div>
+                            <textarea name="text" class="comment-form__text" placeholder='Add you comment here'></textarea>
+                            <label class="comment-form__info" id="cinfo">250 characters left</label>
+                            <button type='submit' id="btn" class="btn btn-md btn--danger comment-form__btn">리뷰 남기기</button>
+                        </form>
+
+                        <div class="comment-sets">
+
+                        <div class="comment" th:each="r:${reviews}">
+                            <div class="comment__images">
+                                <img class="comimg" alt='' src="/images/comment/comments.jpg">
+                            </div>
+
+                            <a href='#' class="comment__author" th:text="${r.name}+'('+${r.uid}+')'"><span class="social-used fa fa-facebook"></span>Roberta Inetti</a>
+                            <p class="comment__date" th:text="${r.dday}+'일전'+'|'+${#dates.format(r.regdate,'yyyy-MM-dd E요일')}">today </p>
+                            <p class="comment__message" th:text="${r.text}">Lorem psumus.agittis dolor tristique et.</p>
+                            <div class="movie__rate">
+                            	<div class="star-ratings">
+									<div class="star-ratings-fill space-x-2 text-lg"
+								    th:style="${'width:'+r.star*20+'%'}" th:value ="${r.star}">
+										<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+									</div>
+									<div class="star-ratings-base space-x-2 text-lg">
+										<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+									</div>
+								</div> 
+							</div>                          
+                        </div>
+                        </div>
+
+                        
+
+                    </div>
+                    </div>
+                </div>
+                
+        </section>
+        
+        <div class="clearfix"></div>
+
+<!-- JavaScript-->
+        <!-- jQuery 3.1.1--> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
+        <!-- Migrate --> 
+        <script src="/js/external/jquery-migrate-1.2.1.min.js"></script>
+        <!-- jQuery UI -->
+        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <!-- Bootstrap 3--> 
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+        <!-- Mobile menu -->
+        <script src="/js/jquery.mobile.menu.js"></script>
+         <!-- Select -->
+        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+
+        <!-- Stars rate -->
+        <script src="/js/external/jquery.raty.js"></script>
+        <!-- Swiper slider -->
+        <script src="/js/external/idangerous.swiper.min.js"></script>
+        <!-- Magnific-popup -->
+        <script src="/js/external/jquery.magnific-popup.min.js"></script> 
+		<!--*** Google map  ***-->
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVcOlUeG5vMxZi4i7fI-F0ELlSICjLxaA&callback=initMap&region=kr"></script>
+        <!-- Share buttons -->
+        <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-525fd5e9061e7ef0"></script>
+
+        <!-- Form element -->
+        <script src="/js/external/form-element.js"></script>
+        <!-- Form validation -->
+        <script src="/js/form.js"></script>
+
+        <!-- Custom -->
+        <script src="/js/custom.js"></script>
+		<script type="text/javascript">
+		
+		function display(data){
+			var title = $('#title').text();
+			chart = Highcharts.chart('chartcontainer', {
+				colors: ['#FAE0D4', '#E8D9FF', '#FFFF7E', '#FFFF7E', '#00D8FF'],
+			    title: {
+			        text: '연령별 영화 리뷰 수'
+			    },
+			    subtitle: {
+			        text: title+'의 영화 리뷰'
+			    },
+			    xAxis: {
+			        categories: data.age,
+			       
+			    },
+			    yAxis: {
+			    	 title : {
+				        	text:'리뷰 수'
+				        }
+			    },
+			    series: [{
+			        type: 'column',
+			        name : '수',
+			        colorByPoint: true,
+			        data: data.rcnt,
+			        showInLegend: false
+			    }]
+			});
+			
+		};
+		function display2(data){
+			var title = $('#title').text();
+			Highcharts.chart('circlecontainer', {
+				colors: ['#C2F4F5', '#FFD9EC', '#666666', '#999999', '#dddddd'],
+			    chart: {
+			    	
+			        type: 'pie',
+			        options3d: {
+			            enabled: true,
+			            alpha: 45,
+			            beta: 0
+			        }
+			    },
+			    title: {
+			        text: '성별별 영화 리뷰 수'
+			    },
+			    subtitle: {
+			        text: title+'의 영화 리뷰'
+			    },
+			    accessibility: {
+			        point: {
+			            valueSuffix: '%'
+			        }
+			    },
+			    tooltip: {
+			        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+			    },
+			    plotOptions: {
+			        pie: {
+			            allowPointSelect: true,
+			            cursor: 'pointer',
+			            depth: 35,
+			            dataLabels: {
+			                enabled: true,
+			                format: '{point.name}'
+			            }
+			        }
+			    },
+			    series: [{
+			        type: 'pie',
+			        name: '성별',
+			        data: [
+			        	{
+			                name: 'Man',
+			                y: data.rpercent[0],
+			                sliced: true,
+			                selected: true
+			               
+			            },
+			            ['Woman',       data.rpercent[1]]
+			        ]
+			    }],
+			    
+			});
+		}
+		
+		function getData(id){
+			//var gdata = {'cate':['p1','p2','p3','p4','p5'],'data':[10000,30000,20000,50000,60000]};
+			//display(gdata);
+			$.ajax({
+				url:'chartimpl',
+				data:{'id':id},
+				success:function(data){
+					display(data);
+					
+				}
+			});
+		};
+		function getData2(id){
+			$.ajax({
+				url:'circlechartimpl',
+				data:{'id':id},
+				success:function(data){
+					display2(data);
+				}
+			});
+		}
+            $(document).ready(function() {
+                 $('#btn').click(function(){
+             		$('.comment-form').attr({
+             			'method':'post',
+             			'action':'/movielist/reviewimpl'
+             		});
+             		$('.comment-form').submit();
+             	});
+                 $('textarea[name="text"]').keyup(function(){
+             		var text = $(this).val();
+             			$('#cinfo').text((250-text.length)+' characters left');
+             		
+             	});
+                var id = $('#id').val();  
+                var title = $('#title').text();
+                getData(id);
+                getData2(id);
+                document.getElementById('plain').addEventListener('click', () => {
+                    chart.update({
+                        chart: {
+                            inverted: false,
+                            polar: false
+                        },
+                        subtitle: {
+                            text: title+'의 영화 리뷰'
+                        }
+                    });
+                });
+
+                document.getElementById('inverted').addEventListener('click', () => {
+                    chart.update({
+                        chart: {
+                            inverted: true,
+                            polar: false
+                        },
+                        subtitle: {
+                            text: title+'의 영화 리뷰'
+                        }
+                    });
+                });
+                init_MoviePage();
+                init_MoviePageFull();
+
+            });
+            var map;
+    		var button = document.getElementById('button');
+    		function initMap() {
+    		      var mulcam = { lat: 37.50333108332433 ,lng: 127.04989170123987 };
+    		      var infowindow = new google.maps.InfoWindow();
+    		      var map = new google.maps.Map(
+    		        document.getElementById('map'), {
+    		          zoom: 15,
+    		          center: mulcam
+    		        });
+    		      var locations = '<div class="wrap"><div class="text-box"><h4 margin="20px 0px 20px">A_Movie</h4><p>특별한 클래식 영화관</p><div class="img-box"><img width="260px" height="280px" src="/images/cinema/theater3.jpg"></div><a target="_blank" href="https://www.google.co.kr/maps/place/%EB%A9%80%ED%8B%B0%EC%BA%A0%ED%8D%BC%EC%8A%A4+%EC%84%A0%EB%A6%89/data=!4m5!3m4!1s0x357ca512b1b5e77b:0x90048774d24a2a4f!8m2!3d37.503376!4d127.049776?hl=ko"><p style="color:blue">서울특별시 강남구 선릉로 428</p><p style="color:blue"> 멀티캠퍼스 건물 7층</p></a></div>'
+    	                
+    		      marker = new google.maps.Marker({	    	    
+    				    position: mulcam,			    
+    				    map: map,
+    				    animation: google.maps.Animation.BOUNCE,
+    				    label: {
+    				        text: "A Movie",
+    				        color: "#C70E20"
+    				    },
+    			      icon: {
+    			          url: "/images/cinema/movieicon.png",
+    			          scaledSize: new google.maps.Size(40, 40),
+    			          labelOrigin: new google.maps.Point(20, 45),
+    			      }    
+    			  });
+    		      google.maps.event.addListener(marker, 'click', (function(marker) {
+                      return function() {
+                          
+                          //html로 표시될 인포 윈도우의 내용
+                          infowindow.setContent(locations);
+                          
+                          //인포윈도우가 표시될 위치
+                          infowindow.open(map, marker);
+                      }
+                  })(marker));
+    		      marker.addListener('click', function() {
+                      
+                      //중심 위치를 클릭된 마커의 위치로 변경
+                      map.setCenter(this.getPosition());
+
+                      //마커 클릭 시의 줌 변화
+                      map.setZoom(14);
+                  });
+    		    }
+		</script>
+
+</body>
+</html>

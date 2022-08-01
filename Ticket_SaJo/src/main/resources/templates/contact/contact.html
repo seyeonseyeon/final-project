@@ -1,0 +1,185 @@
+<!doctype html>
+<head>
+<style>
+h4 {
+margin: 20px 0px 20px;
+}
+p{
+margin: 0px;
+}
+#btn1{
+background-color: gray;
+border: solid 1px gray;
+
+}
+</style>
+</head>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+        <meta charset="utf-8">
+        
+<body>
+
+    <div class="wrapper">
+        <!-- Main content -->
+        <section class="container">
+            <h2 class="page-heading heading--outcontainer">Contact</h2>
+            <div class="contact">
+                <p class="contact__title">궁금하시거나 도움이 필요하신가요 <br><span class="contact__describe">하단의 입력란에 이메일과 상담내용을 입력 후 메시지 전송 버튼을 눌러주세요</span></p>
+                <span class="contact__mail">k_ms222@naver.com</span>
+                <span class="contact__tel">1544-9001</span>
+            </div>
+        </section>
+
+        <div class="contact-form-wrapper">
+            <div class="container">
+                <div class="col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+                    <form id='contact-form' class="form row" action="https://script.google.com/macros/s/AKfycbzgoGkp4W2fwgmuyMIVzKUHhMJGeepA6um90CzH7SG6r_XmSco/exec" method="POST">
+                        <p class="form__title">문의 사항을 작성해 주세요</p>
+                        <div class="col-sm-6">
+                            <input type='text' placeholder='Your name' name='user-name' class="form__name">
+                        </div>
+                        <div class="col-sm-6">
+                            <input type='email' placeholder='Your email' name='user-email' class="form__mail">
+                        </div>
+                        <div class="col-sm-12">
+                            <textarea placeholder="Your message" name="user-message" class="form__message"></textarea>
+                        </div>
+                        <button type="submit" id="btn1" class='btn btn-md btn--danger'>메시지 전송</button>
+                    </form>
+                    <section class="email-me">
+                     <div>
+				  </div>
+					</section>
+                </div>
+            </div>
+        </div>
+
+        <section class="container">
+            <div class="contact">
+                <p class="contact__title">저희 영화관을 찾기 어려우신가요<br> <span class="contact__describe">상세한 위치를 알고싶다면 하단의 아이콘을 클릭해 주세요</span></p>
+            </div>
+        </section>
+
+        
+        <div id="map" style="width:100%; height: 70vh;"></div>
+        <div class="clearfix"></div>
+
+    </div>
+
+    <!-- open/close -->
+        <div class="overlay overlay-hugeinc">
+            
+            <section class="container">
+
+                <div class="col-sm-4 col-sm-offset-4">
+                    <button type="button" class="overlay-close">Close</button>
+                    <form id="login-form" class="login" method='get' novalidate=''>
+                        <p class="login__title">sign in <br><span class="login-edition">welcome to A.Movie</span></p>
+
+                        <div class="social social--colored">
+                                <a href='#' class="social__variant fa fa-facebook"></a>
+                                <a href='#' class="social__variant fa fa-twitter"></a>
+                                <a href='#' class="social__variant fa fa-tumblr"></a>
+                        </div>
+
+                        <p class="login__tracker">or</p>
+                        
+                        <div class="field-wrap">
+                        <input type='email' placeholder='Email' name='user-email' class="login__input">
+                        <input type='password' placeholder='Password' name='user-password' class="login__input">
+
+                        <input type='checkbox' id='#informed' class='login__check styled'>
+                        <label for='#informed' class='login__check-info'>remember me</label>
+                         </div>
+                        
+                        <div class="login__control">
+                            <button type='submit' class="btn btn-md btn--warning btn--wider">sign in</button>
+                            <a href="#" class="login__tracker form__tracker">Forgot password?</a>
+                        </div>
+                    </form>
+                </div>
+
+            </section>
+        </div>
+
+	<!-- JavaScript-->
+        <!-- jQuery 3.1.1--> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="/js/external/jquery-3.1.1.min.js"><\/script>')</script>
+        <!-- Migrate --> 
+        <script src="js/external/jquery-migrate-1.2.1.min.js"></script>
+        <!-- Bootstrap 3--> 
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+        <!-- Mobile menu -->
+        <script src="/js/jquery.mobile.menu.js"></script>
+         <!-- Select -->
+        <script src="/js/external/jquery.selectbox-0.2.min.js"></script>
+
+        <!--*** Google map  ***-->
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVcOlUeG5vMxZi4i7fI-F0ELlSICjLxaA&callback=initMap&region=kr"></script>
+        <!--*** Google map infobox  ***-->
+        <script src="/js/external/infobox.js"></script>
+        <!-- Form element -->
+        <script src="/js/external/form-element.js"></script>
+        <!-- Form validation -->
+        <script src="/js/form.js"></script>
+
+        <!-- Custom -->
+        <script src="/js/custom.js"></script> 
+		<script data-cfasync="false" type="text/javascript" src="/js/form-submission-handler.js"></script>
+		<script type="text/javascript">
+		var map;
+		var button = document.getElementById('button');
+		function initMap() {
+		      var mulcam = { lat: 37.50333108332433 ,lng: 127.04989170123987 };
+		      var infowindow = new google.maps.InfoWindow();
+		      var map = new google.maps.Map(
+		        document.getElementById('map'), {
+		          zoom: 15,
+		          center: mulcam
+		        });
+		      var locations = '<div class="wrap"><div class="text-box"><h4 margin="20px 0px 20px">A_Movie</h4><p>특별한 클래식 영화관</p><div class="img-box"><img width="260px" height="280px" src="/images/cinema/theater3.jpg"></div><a target="_blank" href="https://www.google.co.kr/maps/place/%EB%A9%80%ED%8B%B0%EC%BA%A0%ED%8D%BC%EC%8A%A4+%EC%84%A0%EB%A6%89/data=!4m5!3m4!1s0x357ca512b1b5e77b:0x90048774d24a2a4f!8m2!3d37.503376!4d127.049776?hl=ko"><p style="color:blue">서울특별시 강남구 선릉로 428</p><p style="color:blue"> 멀티캠퍼스 건물 7층</p></a></div>'
+	                
+		      marker = new google.maps.Marker({	    	    
+				    position: mulcam,			    
+				    map: map,
+				    animation: google.maps.Animation.BOUNCE,
+				    label: {
+				        text: "A Movie",
+				        color: "#C70E20"
+				    },
+			      icon: {
+			          url: "/images/cinema/movieicon.png",
+			          scaledSize: new google.maps.Size(40, 40),
+			          labelOrigin: new google.maps.Point(20, 45),
+			      }    
+			  });
+		      google.maps.event.addListener(marker, 'click', (function(marker) {
+                  return function() {
+                      
+                      //html로 표시될 인포 윈도우의 내용
+                      infowindow.setContent(locations);
+                      
+                      //인포윈도우가 표시될 위치
+                      infowindow.open(map, marker);
+                  }
+              })(marker));
+		      marker.addListener('click', function() {
+                  
+                  //중심 위치를 클릭된 마커의 위치로 변경
+                  map.setCenter(this.getPosition());
+
+                  //마커 클릭 시의 줌 변화
+                  map.setZoom(14);
+              });
+		    }
+		
+            $(document).ready(function() {
+                init_Contact ();
+                
+            });
+		</script>
+
+</body>
+</html>
